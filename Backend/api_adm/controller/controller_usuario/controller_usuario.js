@@ -115,8 +115,23 @@ const validarDados = async (usuario, contentType) => {
     // Valida se o formato de dados é JSON
     if(String(contentType).toLowerCase() != 'application/json') return message.ERROR_CONTENT_TYPE // Status code 415
 
-    if(usuario.nome == undefined || usuario.nome == null || usuario.nome == '' || usuario.nome.length > 100 || typeof(usuario.nome) != 'string'){
+    if(usuario.nome == undefined || usuario.nome == null || usuario.nome == '' || usuario.nome.length > 255 || typeof(usuario.nome) != 'string'){
         message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(usuario.email == undefined || usuario.email == null || usuario.email == '' || usuario.email.length > 255 || typeof(usuario.email) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[EMAIL] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(usuario.senha == undefined || usuario.senha == null || usuario.senha == '' || usuario.senha.length > 30 || typeof(usuario.senha) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[SENHA] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(usuario.nivel_de_acesso == undefined || usuario.nivel_de_acesso == null || usuario.nivel_de_acesso == '' || String(usuario.nivel_de_acesso).length > 1 || typeof(usuario.nivel_de_acesso) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[NIVEL DE ACESSO] INVÁLIDO'
         return message.ERROR_BAD_REQUEST // 400
     }
 

@@ -115,8 +115,18 @@ const validarDados = async (promocao, contentType) => {
     // Valida se o formato de dados é JSON
     if(String(contentType).toLowerCase() != 'application/json') return message.ERROR_CONTENT_TYPE // Status code 415
 
-    if(promocao.nome == undefined || promocao.nome == null || promocao.nome == '' || promocao.nome.length > 100 || typeof(promocao.nome) != 'string'){
-        message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+    if(promocao.valor_atual == undefined || promocao.valor_atual == null || promocao.valor_atual == '' || Number(promocao.valor_atual).toFixed(2).length > 6 || typeof(promocao.valor_atual) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[VALOR ATUAL] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(promocao.valor_promocao == undefined || promocao.valor_promocao == null || promocao.valor_promocao == '' || Number(promocao.valor_promocao).toFixed(2).length > 6 || typeof(promocao.valor_promocao) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[VALOR PROMOÇÃO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(promocao.status == undefined || promocao.status == null || promocao.status == '' || String(promocao.status).length > 1 || typeof(promocao.status) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[STATUS] INVÁLIDO'
         return message.ERROR_BAD_REQUEST // 400
     }
 

@@ -115,8 +115,23 @@ const validarDados = async (lote, contentType) => {
     // Valida se o formato de dados é JSON
     if(String(contentType).toLowerCase() != 'application/json') return message.ERROR_CONTENT_TYPE // Status code 415
 
-    if(lote.nome == undefined || lote.nome == null || lote.nome == '' || lote.nome.length > 100 || typeof(lote.nome) != 'string'){
-        message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+    if(lote.numero == undefined || lote.numero == null || lote.numero == '' ||  typeof(lote.numero) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[NUMERO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(lote.quantidade == undefined || lote.quantidade == null || lote.quantidade == '' || typeof(lote.quantidade) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[QUANTIDADE] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(lote.data_fabricacao == undefined || lote.data_fabricacao == null || lote.data_fabricacao == '' || String(lote.data_fabricacao).length != 10 || typeof(lote.data_fabricacao) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[DATA FABRICAÇÃO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(lote.data_validade == undefined || lote.data_validade == null || lote.data_validade == '' || String(lote.data_validade).length != 10 || typeof(lote.data_validade) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[DATA VALIDADE] INVÁLIDO'
         return message.ERROR_BAD_REQUEST // 400
     }
 

@@ -115,8 +115,8 @@ const validarDados = async (ingrediente, contentType) => {
     // Valida se o formato de dados é JSON
     if(String(contentType).toLowerCase() != 'application/json') return message.ERROR_CONTENT_TYPE // Status code 415
 
-    if(ingrediente.nome == undefined || ingrediente.nome == null || ingrediente.nome == '' || ingrediente.nome.length > 100 || typeof(ingrediente.nome) != 'string'){
-        message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+    if(ingrediente.ingrediente == undefined || ingrediente.ingrediente == null || ingrediente.ingrediente == '' || ingrediente.ingrediente.length > 50 || typeof(ingrediente.ingrediente) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[INGREDIENTE] INVÁLIDO'
         return message.ERROR_BAD_REQUEST // 400
     }
 

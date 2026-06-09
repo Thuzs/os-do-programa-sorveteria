@@ -120,6 +120,31 @@ const validarDados = async (produto, contentType) => {
         return message.ERROR_BAD_REQUEST // 400
     }
 
+    if(produto.descricao == undefined || produto.descricao == null || produto.descricao == '' || produto.descricao.length > 5 || typeof(produto.descricao) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[DESCRIÇÃO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(produto.preco == undefined || produto.preco == null || produto.preco == '' || Number(produto.preco).toFixed(2).length > 6 || typeof(produto.preco) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[PREÇO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(produto.status == undefined || produto.status == null || produto.status == '' || String(produto.status).length > 1 || typeof(produto.status) != 'number'){
+        message.ERROR_BAD_REQUEST.field = '[STATUS] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(produto.tamanho == undefined || produto.tamanho == null || produto.tamanho == '' || produto.tamanho.length > 10 || typeof(produto.tamanho) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[TAMANHO] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
+    if(produto.img == undefined || produto.img == null || produto.img == '' || produto.img.length > 255 || typeof(produto.img) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[IMG] INVÁLIDO'
+        return message.ERROR_BAD_REQUEST // 400
+    }
+
     return false
 }
 

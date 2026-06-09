@@ -115,8 +115,8 @@ const validarDados = async (sabor, contentType) => {
     // Valida se o formato de dados é JSON
     if(String(contentType).toLowerCase() != 'application/json') return message.ERROR_CONTENT_TYPE // Status code 415
 
-    if(sabor.nome == undefined || sabor.nome == null || sabor.nome == '' || sabor.nome.length > 100 || typeof(sabor.nome) != 'string'){
-        message.ERROR_BAD_REQUEST.field = '[NOME] INVÁLIDO'
+    if(sabor.sabor == undefined || sabor.sabor == null || sabor.sabor == '' || sabor.sabor.length > 50 || typeof(sabor.sabor) != 'string'){
+        message.ERROR_BAD_REQUEST.field = '[SABOR] INVÁLIDO'
         return message.ERROR_BAD_REQUEST // 400
     }
 
