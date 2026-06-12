@@ -1,13 +1,52 @@
 /*********************************************************************************************************
  * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD de ingrediente
- * Data: 11/06/2026
- * Autor: juan Carlos
+ * Data: 09/06/2026
+ * Autor: Julio Augusto
  * Versão: 1.0.5.26
  * *******************************************************************************************************/
 
 const config_message = require('../module/configMessages.js')
 const ingredienteDAO = require('../../model/DAO/ingrediente/ingrediente.js')
 
+// inserir novo ingrediente
+const inserirNovoIngrediente = async (ingrediente, contentType) => {
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        let validar = await validarDados(ingrediente, contentType)
+        if(validar) return validar // 400 ou 415
+
+        let result = await ingredienteDAO.insertIngrediente(ingrediente)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL
+
+        ingrediente.id = result
+        return await montarMensagem(message, message.SUCESS_CREATED_ITEM, ingrediente)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER
+}
+
+// atualizar ingrediente
+const atualizarIngrediente = async (ingrediente, id, contentType) => {
+    let message = JSON.parse(JSON.stringify(config_message))
+
+    try {
+        let validar = await validarDados(ingrediente, contentType)
+        if(validar) return validar // 400 ou 415
+
+        let resultBuscarId = await buscarIngrediente(id)
+        if(!resultBuscarId.status) return resultBuscarId // 400 e 404
+
+        ingrediente.id = Number(id)
+        let result = await ingredienteDAO.updateIngrediente(ingrediente)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL // 500
+
+        return await montarMensagem(message, message.SUCESS_UPDATE_ITEM, ingrediente)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
+}
 
 // listar todas ingredientes
 const listarIngrediente = async () => {
@@ -51,7 +90,24 @@ const buscarIngrediente = async (id) => {
     return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
 }
 
+// excluir ingrediente pelo id
+const excluirIngrediente = async (id) => {
+    let message = JSON.parse(JSON.stringify(config_message))
 
+    try {
+
+        let resultBuscarId = await buscarIngrediente(id)
+        if(!resultBuscarId.status) return resultBuscarId // 400 e 404
+
+        let result = await ingredienteDAO.deleteIngrediente(id)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL // 500
+
+        return await montarMensagem(message, message.SUCESS_DELETE_ITEM)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
+}
 
 const validarDados = async (ingrediente, contentType) => {
     let message = JSON.parse(JSON.stringify(config_message))
@@ -90,6 +146,9 @@ const montarMensagem = async (base,status,response = null) => {
 
 
 module.exports = {
+    inserirNovoIngrediente,
+    atualizarIngrediente,
     listarIngrediente,
-    buscarIngrediente
+    buscarIngrediente,
+    excluirIngrediente
 }

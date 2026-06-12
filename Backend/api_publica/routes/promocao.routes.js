@@ -1,8 +1,8 @@
 /*************************************************************************************
  * Objetivo: Arquivo responsável pelo gerenciamento de rotas de atividade
- * Data: 11/06/2026
  * Autor: Juan Carlos
- * Versão: 1.0.4.26
+ * data: 11/06/2026
+ * Versão: 1.0.5.26
  * *********************************************************************************/
 
 // import do express
@@ -17,12 +17,21 @@ const bodyParser = require('body-parser')
 const bodyParserJSON = bodyParser.json()
 
 const {
+    inserirNovaPromocao,
+    atualizarPromocao,
     listarPromocao,
-    buscarPromocao
-} = require('../controller/controller_promocao/promocao.js')
+    buscarPromocao,
+    excluirPromocao
+} = require('../controller/promocao/controller_promocao.js')
 
 // Promoções
+router.post('/', bodyParserJSON, async (req,res) => {
+    let dados = req.body
+    let contentType = req.headers['content-type']
 
+    let result = await inserirNovaPromocao(dados, contentType)
+    res.status(result.status_code).json(result)
+})
 
 router.get('/', async (req,res) => {
     let result = await listarPromocao()
@@ -36,6 +45,20 @@ router.get('/:id', async (req,res) => {
     res.status(result.status_code).json(result)
 })
 
+router.put('/:id', bodyParserJSON, async (req,res) => {
+    let id = req.params.id
+    let dados = req.body
+    let contentType = req.headers['content-type']
 
+    let result = await atualizarPromocao(dados, id, contentType)
+    res.status(result.status_code).json(result)
+})
+
+router.delete('/:id', async (req,res) => {
+    let id = req.params.id
+
+    let result = await excluirPromocao(id)
+    res.status(result.status_code).json(result)
+})
 
 module.exports = router

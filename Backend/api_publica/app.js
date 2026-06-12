@@ -1,9 +1,11 @@
-/*************************************************************************************
- * Objetivo: Arquivo responsável pelo gerenciamento de rotas de atividade
- * Data: 11/06/2026
+/*******************************************************************************************
+ * Objetivo: Arquivo principal responsável pela criação da API Administrativa da Sorvetudos
  * Autor: Juan Carlos
- * Versão: 1.0.4.26
- * *********************************************************************************/
+ * data: 11/06/2026
+ * versão: 1.0
+ * *****************************************************************************************/
+
+
 // IMPORT das dependências para criar a API
 const express = require('express')
 const cors = require('cors')
@@ -28,9 +30,6 @@ app.use(cors(corsOptions))
 
 // Recebe o token encaminhado nas requisições e solicitar as validações
 
-
-
-
 // ****** ROTAS *******
 // Import das rotas
 const categoriaRouter = require('./routes/categoria.routes.js')
@@ -39,7 +38,15 @@ const produtoRouter = require('./routes/produto.routes.js')
 const promocaoRouter = require('./routes/promocao.routes.js')
 const saborRouter = require('./routes/sabor.routes.js')
 const tagRouter = require('./routes/tag.routes.js')
+const tamanhoRouter = require('./routes/tamanho.routes.js')
+const filtroRouter = require('./routes/filtro.routes.js')
+const pesquisaRouter = require('./routes/pesquisa.routes.js')
 
+// filtro
+app.use('/v1/sorvetudos/catalogo/produtos/filtro', cors(), filtroRouter)
+
+// pesquisa
+app.use('/v1/sorvetudos/catalogo/produtos/pesquisa', cors(), pesquisaRouter)
 
 // categoria
 app.use('/v1/sorvetudos/catalogo/categorias', cors(),  categoriaRouter)
@@ -58,6 +65,9 @@ app.use('/v1/sorvetudos/catalogo/sabores', cors(),  saborRouter)
 
 // tag
 app.use('/v1/sorvetudos/catalogo/tags', cors(),  tagRouter)
+
+// tamanho
+app.use('/v1/sorvetudos/catalogo/tamanhos', cors(),   tamanhoRouter)
 
 
 // Iniciando o Servidor

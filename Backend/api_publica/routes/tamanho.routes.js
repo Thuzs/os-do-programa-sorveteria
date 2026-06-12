@@ -1,5 +1,5 @@
 /*************************************************************************************
- * Objetivo: Arquivo responsável pelo gerenciamento de rotas de atividade
+ * Objetivo: Arquivo responsável pelo gerenciamento de rotas de tamanho
  * Autor: Juan Carlos
  * data: 11/06/2026
  * Versão: 1.0.5.26
@@ -17,31 +17,31 @@ const bodyParser = require('body-parser')
 const bodyParserJSON = bodyParser.json()
 
 const {
-    inserirNovoIngrediente,
-    atualizarIngrediente,
-    listarIngrediente,
-    buscarIngrediente,
-    excluirIngrediente
-} = require('../controller/ingrediente/controller_ingrediente.js')
+    inserirNovoTamanho,
+    atualizarTamanho,
+    listarTamanho,
+    buscarTamanho,
+    excluirTamanho
+} = require('../controller/tamanho/controller_tamanho.js')
 
-// Ingredientes
+// tamanhos
 router.post('/', bodyParserJSON, async (req,res) => {
     let dados = req.body
     let contentType = req.headers['content-type']
 
-    let result = await inserirNovoIngrediente(dados, contentType)
+    let result = await inserirNovoTamanho(dados, contentType)
     res.status(result.status_code).json(result)
 })
 
 router.get('/', async (req,res) => {
-    let result = await listarIngrediente()
+    let result = await listarTamanho()
     res.status(result.status_code).json(result)
 })
 
 router.get('/:id', async (req,res) => {
     let id = req.params.id
 
-    let result = await buscarIngrediente(id)
+    let result = await buscarTamanho(id)
     res.status(result.status_code).json(result)
 })
 
@@ -50,14 +50,14 @@ router.put('/:id', bodyParserJSON, async (req,res) => {
     let dados = req.body
     let contentType = req.headers['content-type']
 
-    let result = await atualizarIngrediente(dados, id, contentType)
+    let result = await atualizarTamanho(dados, id, contentType)
     res.status(result.status_code).json(result)
 })
 
 router.delete('/:id', async (req,res) => {
     let id = req.params.id
 
-    let result = await excluirIngrediente(id)
+    let result = await excluirTamanho(id)
     res.status(result.status_code).json(result)
 })
 

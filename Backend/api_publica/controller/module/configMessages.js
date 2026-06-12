@@ -1,7 +1,15 @@
+/**************************************************************************************
+ * Objetivo: Arquivo responsável pela configuração e padronização das mensagens da API
+ * Data: 11/06/2026
+ * Autor: Juan Carlos
+ * Versão: 1.0
+ *************************************************************************************/
+
+// Padronização de cabeçalho para retorno dos endpoints da API
 const DEFAULT_MESSAGE = {
     "api_description":  "API para gerenciar o controle da empresa Sorvetudos.",
-    "developer"      :  "Julio Augusto.",
-    "version"        :  "1.0.4.26",
+    "developer"      :  "Juan Carlos",
+    "version"        :  "1.0.5.26",
     "status"         :  Boolean,
     "status_code"    :  Number,
     "response"       :  {}

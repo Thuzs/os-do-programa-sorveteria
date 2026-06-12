@@ -1,7 +1,7 @@
 /***********************************************************************************
  * Objetivo: Arquivo responsável pelo CRUD bo Banco de dados MYSQL na tabela categoria
- * Data: 11/06/2026
- * Autor: Juan Carlos
+* Autor: Juan Carlos
+ * data: 11/06/2026
  * Versão: 1.0.5.26
  * *********************************************************************************/
 
@@ -9,9 +9,36 @@ const knex = require('knex')
 const knexConfig = require('../../database_config_knex/knexFile.js')
 const knexConex = knex(knexConfig.development)
 
+// insert de categoria
+const insertCategoria = async (categoria) => {
+    let sql = `INSERT INTO tbl_categoria (categoria)
+               VALUES ('${categoria.categoria}')`
+
+    try {
+        let response = await knexConex.raw(sql)
+
+        if(response) return response[0].insertId 
+
+    } catch (error) {}
+
+    return false
+}
+
+// update de categoria
+const updateCategoria = async (categoria) => {
+    let sql = `UPDATE tbl_categoria
+               SET  categoria = '${categoria.categoria}'
+               WHERE id = ${categoria.id}`
+    try {
+        let response = await knexConex.raw(sql)
 
 
+        if(response) return response
 
+    } catch (error) {}
+
+    return false
+}
 // select de todas categorias
 const selectAllCategoria = async () => {
     let sql = `SELECT * FROM tbl_categoria ORDER BY id DESC`
@@ -40,10 +67,25 @@ const selectByIdCategoria = async (id) => {
 
     return false
 }
+// delete de categoria
+const deleteCategoria = async (id) => {
+    let sql = `DELETE FROM tbl_categoria
+               WHERE id = ${id}`
+    try {
+        let response = await knexConex.raw(sql)
 
+
+        if(response) return response
+ 
+    } catch (error) {}
+
+    return false
+}
 
 module.exports = {
-  
+    insertCategoria,
+    updateCategoria,
     selectAllCategoria,
-    selectByIdCategoria
+    selectByIdCategoria,
+    deleteCategoria
 }

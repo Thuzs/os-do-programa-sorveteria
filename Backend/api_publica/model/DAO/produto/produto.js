@@ -1,126 +1,107 @@
-/*******************************************************
- * Objetivo:  Arquivo responsavel pelo CRUD no banco de dados MySQL na tabela Produto 
- * Autor: Juan Carlos 
- * Data: 11/06/2026
- * Versão: 1.0
- *******************************************************/
+/***********************************************************************************
+ * Objetivo: Arquivo responsável pelo CRUD bo Banco de dados MYSQL na tabela produto
+* Autor: Juan Carlos
+ * data: 11/06/2026
+ * Versão: 1.0.5.26
+ * *********************************************************************************/
 
-// Import da biblioteca para gerenciar o banco de dados Mysql no node.js
-const  knex = require('knex')
-
-//Import do arquivo de configuração para conexão com BD MySQL
-const knexConfig = require('../../database_config_knex/knexFile')
-
-//Criar a conexão com o banco de dados MySql
+const knex = require('knex')
+const knexConfig = require('../../database_config_knex/knexFile.js')
 const knexConex = knex(knexConfig.development)
 
-
-
-
-// Função para reornar todos os dados da tabela de produto 
-const selectAllProduto = async function() {
-    try {
-
-        let sql =  `select * from tbl_produto order by id desc ` 
-        
-        
-        let result = await knexConex.raw(sql)
-
-         
-        if(Array.isArray(result)){
-            return result[0]
-        }else{
-            return false
-        }
-
-    } catch (error) {
-        return false
-    }
-}
-// Função para retornar produtos filtrando pelo nome
-const selectByProdutoNome = async function(nomeProduto) {
+// insert de produto
+const insertProduto = async (produto) => {
+    let sql = `INSERT INTO tbl_produto (
+                                        nome,
+                                        descricao,
+                                        preco,
+                                        status,
+                                        img
+                                        )
+               VALUES ('${produto.nome}',
+                       '${produto.descricao}',
+                       ${produto.preco},
+                       ${produto.status},
+                       '${produto.img}'
+                        )`
 
     try {
+        let response = await knexConex.raw(sql)
 
-        let sql = `
-            SELECT *
-            FROM tbl_produto
-            WHERE nome LIKE '%${nomeProduto}%'
-            ORDER BY nome ASC
-        `
+        if(response) return response[0].insertId 
 
-        let result = await knexConex.raw(sql)
+    } catch (error) {console.log(error)}
 
-        if(Array.isArray(result)){
-            return result[0]
-        }else{
-            return false
-        }
-
-    } catch (error) {
-        console.log(error)
-        return false
-    }
+    return false
 }
 
-
-//Função para retornar os dados do produto Filtrando pelo ID 
- const selectByIdProduto = async function(id) {
+// update de produto
+const updateProduto = async (produto) => {
+    let sql = `UPDATE tbl_produto
+               SET  nome = '${produto.nome}',
+                    descricao = '${produto.descricao}',
+                    preco = ${produto.preco},
+                    status = ${produto.status},
+                    tamanho = '${produto.tamanho}',
+                    img = '${produto.img}'
+               WHERE id = ${produto.id}`
     try {
-        let sql = `select * from tbl_produto where id= ${id}`
-        
-        let result = await knexConex.raw(sql)
-
-        if(Array.isArray(result)){
-            return result[0]
-        }else{
-            return false
-        }
+        let response = await knexConex.raw(sql)
 
 
-    } catch (error) {
-        return false
-    }
- }
+        if(response) return response
 
+    } catch (error) {}
 
-
- const selectbyFiltro = async function(filtro) {
+    return false
+}
+// select de todas produtos
+const selectAllProduto = async () => {
+    let sql = `SELECT * FROM tbl_produto ORDER BY id DESC`
     try {
+        let response = await knexConex.raw(sql)
 
-        let sql = `
-            call filtro(
-                ${filtro.idProduto ?? 'null'},
-                ${filtro.idCategoria ?? 'null'},
-                ${filtro.idSabor ?? 'null'},
-                ${filtro.idPromocao ?? 'null'},
-                ${filtro.idTamanho ?? 'null'},
-                ${filtro.idLote ?? 'null'},
-                ${filtro.idIngrediente ?? 'null'},
-                ${filtro.idTag ?? 'null'}
-            )
-        `
 
-        let result = await knexConex.raw(sql)
+        if(response) return response[0]
+ 
+    } catch (error) {}
 
-        if(Array.isArray(result)){
-            return result[0]
-        }else{
-            return false
-        }
-
-    } catch (error) {
-        console.log(error)
-        return false
-    }
+    return false
 }
 
-//call filtro(3,3,3,3,3,3,3,3);
+// select de uma produto pelo id
+const selectByIdProduto = async (id) => {
+    let sql = `SELECT * FROM tbl_produto
+               WHERE id = ${id}`
+    try {
+        let response = await knexConex.raw(sql)
 
 
- module.exports = {
-    selectByProdutoNome,
+        if(response) return response[0]
+        
+    } catch (error) {}
+
+    return false
+}
+// delete de produto
+const deleteProduto = async (id) => {
+    let sql = `DELETE FROM tbl_produto
+               WHERE id = ${id}`
+    try {
+        let response = await knexConex.raw(sql)
+
+
+        if(response) return response
+ 
+    } catch (error) {}
+
+    return false
+}
+
+module.exports = {
+    insertProduto,
+    updateProduto,
     selectAllProduto,
     selectByIdProduto,
-    selectbyFiltro
- }
+    deleteProduto
+}

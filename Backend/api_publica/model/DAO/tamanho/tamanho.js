@@ -1,5 +1,5 @@
 /***********************************************************************************
- * Objetivo: Arquivo responsável pelo CRUD bo Banco de dados MYSQL na tabela sabor
+ * Objetivo: Arquivo responsável pelo CRUD bo Banco de dados MYSQL na tabela tamanho
  * Autor: Juan Carlos
  * data: 11/06/2026
  * Versão: 1.0.5.26
@@ -9,10 +9,10 @@ const knex = require('knex')
 const knexConfig = require('../../database_config_knex/knexFile.js')
 const knexConex = knex(knexConfig.development)
 
-// insert de sabor
-const insertSabor = async (sabor) => {
-    let sql = `INSERT INTO tbl_sabor (sabor)
-               VALUES ('${sabor.sabor}')`
+// insert de tamanho
+const insertTamanho = async (tamanho) => {
+    let sql = `INSERT INTO tbl_tamanho (tamanho)
+               VALUES ('${tamanho.tamanho}')`
 
     try {
         let response = await knexConex.raw(sql)
@@ -24,11 +24,11 @@ const insertSabor = async (sabor) => {
     return false
 }
 
-// update de sabor
-const updateSabor = async (sabor) => {
-    let sql = `UPDATE tbl_sabor
-               SET  sabor = '${sabor.sabor}'
-               WHERE id = ${sabor.id}`
+// update de tamanho
+const updateTamanho = async (tamanho) => {
+    let sql = `UPDATE tbl_tamanho
+               SET  tamanho = '${tamanho.tamanho}'
+               WHERE id = ${tamanho.id}`
     try {
         let response = await knexConex.raw(sql)
 
@@ -39,9 +39,9 @@ const updateSabor = async (sabor) => {
 
     return false
 }
-// select de todas sabors
-const selectAllSabor = async () => {
-    let sql = `SELECT * FROM tbl_sabor ORDER BY id DESC`
+// select de todas tamanhos
+const selectAllTamanho = async () => {
+    let sql = `SELECT * FROM tbl_tamanho ORDER BY id DESC`
     try {
         let response = await knexConex.raw(sql)
 
@@ -53,9 +53,9 @@ const selectAllSabor = async () => {
     return false
 }
 
-// select de uma sabor pelo id
-const selectByIdSabor = async (id) => {
-    let sql = `SELECT * FROM tbl_sabor
+// select de uma tamanho pelo id
+const selectByIdTamanho = async (id) => {
+    let sql = `SELECT * FROM tbl_tamanho
                WHERE id = ${id}`
     try {
         let response = await knexConex.raw(sql)
@@ -67,9 +67,9 @@ const selectByIdSabor = async (id) => {
 
     return false
 }
-// delete de sabor
-const deleteSabor = async (id) => {
-    let sql = `DELETE FROM tbl_sabor
+// delete de tamanho
+const deleteTamanho = async (id) => {
+    let sql = `DELETE FROM tbl_tamanho
                WHERE id = ${id}`
     try {
         let response = await knexConex.raw(sql)
@@ -83,9 +83,9 @@ const deleteSabor = async (id) => {
 }
 
 module.exports = {
-    insertSabor,
-    updateSabor,
-    selectAllSabor,
-    selectByIdSabor,
-    deleteSabor
+    insertTamanho,
+    updateTamanho,
+    selectAllTamanho,
+    selectByIdTamanho,
+    deleteTamanho
 }

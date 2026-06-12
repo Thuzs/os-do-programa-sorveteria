@@ -1,13 +1,52 @@
 /*********************************************************************************************************
  * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD de promocao
- * Data: 11/06/2026
- * Autor: juan Carlos
- * Versão: 1.0.5.26
+ * Autor: Juan Carlos
+ * data: 11/06/2026
+ * versão: 1.0
  * *******************************************************************************************************/
 
 const config_message = require('../module/configMessages.js')
 const promocaoDAO = require('../../model/DAO/promocao/promocao.js')
 
+// inserir nova promocao
+const inserirNovaPromocao = async (promocao, contentType) => {
+    let message = JSON.parse(JSON.stringify(config_message))
+    try {
+        let validar = await validarDados(promocao, contentType)
+        if(validar) return validar // 400 ou 415
+
+        let result = await promocaoDAO.insertPromocao(promocao)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL
+
+        promocao.id = result
+        return await montarMensagem(message, message.SUCESS_CREATED_ITEM, promocao)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER
+}
+
+// atualizar promocao
+const atualizarPromocao = async (promocao, id, contentType) => {
+    let message = JSON.parse(JSON.stringify(config_message))
+
+    try {
+        let validar = await validarDados(promocao, contentType)
+        if(validar) return validar // 400 ou 415
+
+        let resultBuscarId = await buscarPromocao(id)
+        if(!resultBuscarId.status) return resultBuscarId // 400 e 404
+
+        promocao.id = Number(id)
+        let result = await promocaoDAO.updatePromocao(promocao)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL // 500
+
+        return await montarMensagem(message, message.SUCESS_UPDATE_ITEM, promocao)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
+}
 
 // listar todas promocaos
 const listarPromocao = async () => {
@@ -51,7 +90,24 @@ const buscarPromocao = async (id) => {
     return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
 }
 
+// excluir promocao pelo id
+const excluirPromocao = async (id) => {
+    let message = JSON.parse(JSON.stringify(config_message))
 
+    try {
+
+        let resultBuscarId = await buscarPromocao(id)
+        if(!resultBuscarId.status) return resultBuscarId // 400 e 404
+
+        let result = await promocaoDAO.deletePromocao(id)
+
+        if(!result) return message.ERROR_INTERNAL_SERVER_MODEL // 500
+
+        return await montarMensagem(message, message.SUCESS_DELETE_ITEM)
+
+    } catch (error) {console.log(error)}
+    return message.ERROR_INTERNAL_SERVER_CONTROLLER // 500
+}
 
 const validarDados = async (promocao, contentType) => {
     let message = JSON.parse(JSON.stringify(config_message))
@@ -100,6 +156,9 @@ const montarMensagem = async (base,status,response = null) => {
 
 
 module.exports = {
+    inserirNovaPromocao,
+    atualizarPromocao,
     listarPromocao,
-    buscarPromocao
+    buscarPromocao,
+    excluirPromocao
 }

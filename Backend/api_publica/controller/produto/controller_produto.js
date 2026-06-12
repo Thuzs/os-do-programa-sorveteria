@@ -1,25 +1,11 @@
-/*******************************************************
- * Objetivo: Arquivo responsavel pelo CRUD no banco de dados MySQL na tabela filme 
- * Autor: Juan Carlos 
- * Data: 11/06/2026
- * Versão: 1.0.5.26
- *******************************************************/
-
 /*********************************************************************************************************
  * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD de produto
- * Data: 09/06/2026
- * Autor: Julio Augusto
- * Versão: 1.0.5.26
- * *******************************************************************************************************/
-/*********************************************************************************************************
- * Objetivo: Arquivo responsável pela validação, tratamento e manipulação de dados para o CRUD de produto
- * Data: 09/06/2026
- * Autor: Julio Augusto
- * Versão: 1.0.5.26
+ * Autor: Juan Carlos
+ * data: 11/06/2026
+ * versão: 1.0
  * *******************************************************************************************************/
 const config_message = require('../module/configMessages.js')
 const produtoDAO = require('../../model/DAO/produto/produto.js')
-const UPLOAD = require('../upload/controller_upload_azure.js')
 
 // import das controllers
 const controllerProdutoCategoria = require('./controller_produto_categoria.js')
