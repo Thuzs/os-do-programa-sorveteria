@@ -97,7 +97,7 @@ async function toggleStatus(id, lista) {
   let novoStatus = 1
 
   if (produto.status === 1)
-    novoStatus = 0
+    novoStatus = '0'
 
   try {
     let formData = criarFormData(produto, novoStatus)
