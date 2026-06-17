@@ -49,7 +49,7 @@ const formatarJson = async (dados) => {
 // Produtos
 router.post('/', bodyParserJSON, upload.single('img'), async (req,res) => {
     let dados = await formatarJson(req.body)
-    let img = req.file
+    let img = req
     let contentType = req.headers['content-type']
 
     let result = await inserirNovoProduto(dados, img, contentType)

@@ -12,8 +12,14 @@ const AZURE = require('../module/config_upload_azure.js')
 const fetch = require('node-fetch').default
 
 const uploadFiles = async (file) => {
+    let fileName;
     // concatena no nome do arquivo a data e a hora
-    let fileName = Date.now() + file.originalname
+    if (file.file) {
+        fileName = Date.now() + file.file.originalname
+    } else {     
+        fileName = file.body.img.split('/').pop();
+    }
+     
 
     // URL para enviar para o banco de dados
     let urlFile = `https://${AZURE.ACCOUNT}.blob.core.windows.net/${AZURE.CONTAINER}/${fileName}`
