@@ -142,7 +142,6 @@ async function toggleStatus(id, lista) {
     verificar401(res)
 
     let data = await res.json()
-    console.log(data)
 
     produto.status = novoStatus
 
