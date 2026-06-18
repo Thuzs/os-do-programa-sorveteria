@@ -146,7 +146,7 @@ export const cadastrarProduto = async (formData) =>{
     verificar401(response)
 
     let data = await response.json()
-    window.location.href = 'dashboard.html'
+
     return data
   } catch (err) {
     console.error('Erro ao cadastrar produto:', err)
