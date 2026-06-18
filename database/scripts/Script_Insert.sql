@@ -33,27 +33,11 @@ INSERT INTO tbl_sabor (sabor) VALUES
 ('Avelã'),
 ('Café');
 
--- PROMOÇÕES
-INSERT INTO tbl_promocao (valor_atual, valor_promocao, status) VALUES
-(12.90, 9.90, 1),
-(15.90, 12.90, 1),
-(19.90, 16.90, 1);
-
 -- TAMANHOS
 INSERT INTO tbl_tamanho (tamanho) VALUES
 ('P'),
 ('M'),
 ('G');
-
--- LOTES
-INSERT INTO tbl_lote (numero, data_fabricacao, data_validade, quantidade) VALUES
-(1001, '2026-06-01', '2026-12-01', 100),
-(1002, '2026-06-02', '2026-12-02', 120),
-(1003, '2026-06-03', '2026-12-03', 80),
-(1004, '2026-06-04', '2026-12-04', 150),
-(1005, '2026-06-05', '2026-12-05', 90);
-
-
 
 -- INGREDIENTES
 INSERT INTO tbl_ingrediente (ingrediente) VALUES
@@ -104,15 +88,6 @@ INSERT INTO tbl_produto_sabor (id_sabor, id_produto) VALUES
 (1,4), -- Chocolate
 (7,4); -- Cookies
 
-
--- PRODUTO x PROMOCAO
-INSERT INTO tbl_produto_promocao (id_promocao, id_produto) VALUES
-(1,1),
-(2,2),
-(3,3),
-(2,4);
-
-
 -- PRODUTO x TAMANHO
 INSERT INTO tbl_produto_tamanho (id_tamanho, id_produto) VALUES
 (2,1), -- M
@@ -126,22 +101,6 @@ INSERT INTO tbl_produto_tamanho (id_tamanho, id_produto) VALUES
 
 (2,4), -- M
 (3,4); -- G
-
-
--- PRODUTO x LOTE
-INSERT INTO tbl_produto_lote (id_lote, id_produto) VALUES
-(1,1),
-(2,1),
-
-(2,2),
-(3,2),
-
-(3,3),
-(4,3),
-
-(4,4),
-(5,4);
-
 
 -- PRODUTO x INGREDIENTE
 INSERT INTO tbl_produto_ingrediente (id_ingrediente, id_produto) VALUES
