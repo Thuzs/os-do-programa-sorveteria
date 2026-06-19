@@ -47,10 +47,10 @@ async function fetchProdutosFiltrados() {
     // Se há query de texto, usa o endpoint de pesquisa
     if (state.query.trim()) {
       const res = await fetch(
-        `${BASE_URL}/produtos/pesquisa?nome=${encodeURIComponent(state.query.trim())}`
+        `${BASE_URL}/produtos/pesquisa?nome_produto=${encodeURIComponent(state.query.trim())}`
       );
       const data = await res.json();
-      return data.response.produto ?? [];
+      return data.response.pesquisa.map(item => item.produto[0]).filter(Boolean);
     }
 
     // Monta os query params para o endpoint de filtro
