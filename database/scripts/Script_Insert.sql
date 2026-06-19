@@ -2,7 +2,7 @@ USE db_sorvetudos_2026;
 
 -- Usuario adm
 INSERT INTO tbl_usuario (nome, email, senha, nivel_de_acesso) VALUES
-('admin', 'admin@gmail.com','$2b$10$XBa9TqJuC15BAjlcU/47ge9csV8VuLAfWKj4Z0FCjI0yJpTuYr.be',1);
+('admin', 'admin@gmail.com','$2b$10$XBa9TqJuC15BAjlcU/47ge9csV8VuLAfWKj4Z0FCjI0yJpTuYr.be',2);
 -- senha: 'admin'
 
 -- PRODUTOS
@@ -10,8 +10,8 @@ INSERT INTO tbl_produto (nome, descricao, preco, status, img) VALUES
 ('Pote Avelã Sorvetudos', 'Pote de sorvete de avelã cremoso para adoçar sua manhã', 30.99, 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178169712102020-avela.jpg'),
 ('Sorvete Café Sorvetudos', 'Descubra o equilíbrio perfeito entre cremosidade e o sabor marcante do café em nosso Pote de Sorvete de Café.', 20.98, 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178169890222026-cafe-espresso.jpg'),
 ('Brownie Cobertura Baunilha Sorvetudos', 'O contraste perfeito entre sabores e texturas transforma cada pedaço em uma experiência deliciosa e cheia de sabor.',25.90 , 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178169978194433-brownie-quente.jpg'),
-('Milkshake Ovolmatine Sorvetudos', 'Cada gole entrega o equilíbrio ideal entre doçura e aquele toque maltado que conquistou gerações.', 35.99, 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178170007915537-milkshake-ovomaltine.jpg');
-
+('Milkshake Ovolmatine Sorvetudos', 'Cada gole entrega o equilíbrio ideal entre doçura e aquele toque maltado que conquistou gerações.', 35.99, 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178170007915537-milkshake-ovomaltine.jpg'),
+('milkshake cockies', 'Milkshake de cookies com pedaços crocantes e sabor irresistível.', 32.50, 1, 'https://uploadsorvetudos.blob.core.windows.net/uploadsorvetudos/178172670049740-milkshake-cookies.jpg');
 -- CATEGORIAS
 INSERT INTO tbl_categoria (categoria) VALUES
 ('Sorvete'),
@@ -72,7 +72,10 @@ INSERT INTO tbl_produto_categoria (id_categoria, id_produto) VALUES
 (5,3), -- Sobremesa
 
 (4,4), -- Milkshake
-(6,4); -- Cremosos
+(6,4), -- Cremosos
+
+(4,5), -- Milkshake
+(6,5); -- Cremosos
 
 
 -- PRODUTO x SABOR
@@ -86,7 +89,10 @@ INSERT INTO tbl_produto_sabor (id_sabor, id_produto) VALUES
 (3,3), -- Baunilha
 
 (1,4), -- Chocolate
-(7,4); -- Cookies
+(7,4), -- Cookies
+
+(1,5), -- Chocolate
+(7,5); -- Cookies
 
 -- PRODUTO x TAMANHO
 INSERT INTO tbl_produto_tamanho (id_tamanho, id_produto) VALUES
@@ -100,7 +106,10 @@ INSERT INTO tbl_produto_tamanho (id_tamanho, id_produto) VALUES
 (3,3), -- G
 
 (2,4), -- M
-(3,4); -- G
+(3,4), -- G
+
+(2,5), -- M
+(3,5); -- G
 
 -- PRODUTO x INGREDIENTE
 INSERT INTO tbl_produto_ingrediente (id_ingrediente, id_produto) VALUES
@@ -127,8 +136,13 @@ INSERT INTO tbl_produto_ingrediente (id_ingrediente, id_produto) VALUES
 (1,4),  -- Leite
 (2,4),  -- Chocolate
 (5,4),  -- Açúcar
-(10,4); -- Creme de leite
+(10,4), -- Creme de leite
 
+-- Milkshake Cookies
+(1,5),  -- Leite
+(2,5),  -- Chocolate
+(5,5),  -- Açúcar
+(10,5); -- Creme de leite
 
 -- PRODUTO x TAG
 INSERT INTO tbl_produto_tag (id_tag, id_produto) VALUES
@@ -147,4 +161,9 @@ INSERT INTO tbl_produto_tag (id_tag, id_produto) VALUES
 -- Milkshake
 (1,4), -- Premium
 (3,4), -- Mais Vendido
-(4,4); -- Promoção
+(4,4), -- Promoção
+
+-- Milkshake Cookies
+(1,5), -- Premium
+(3,5), -- Mais Vendido
+(4,5); -- Promoção
